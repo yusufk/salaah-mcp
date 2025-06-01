@@ -28,14 +28,8 @@ uv install
 
 ## Usage
 
-Start the development server:
 ```bash
-uv dev
-```
-
-Or run in production mode:
-```bash
-uv start
+uv run run.py
 ```
 
 The API will be available at:
