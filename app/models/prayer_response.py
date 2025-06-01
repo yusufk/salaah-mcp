@@ -13,11 +13,12 @@ class MoonVisibility(BaseModel):
 
 class PrayerTimeResponse(BaseModel):
     method: str
-    fajr: Union[datetime, str]
-    sunrise: Union[datetime, str]
-    zuhr: Union[datetime, str]
-    asr: Union[datetime, str]
-    sunset: Union[datetime, str]
-    maghrib: Union[datetime, str]
-    isha: Union[datetime, str]
-    midnight: Union[datetime, str]
+    imsak: str
+    fajr: str
+    sunrise: str
+    dhuhr: str
+    asr: str
+    sunset: str
+    maghrib: str
+    isha: str
+    midnight: str

@@ -1,16 +1,20 @@
 from pydantic import BaseModel, Field
 from datetime import datetime
-from typing import Optional
 from enum import Enum
+from typing import Tuple
 
 class CalculationMethod(str, Enum):
-    ISNA = "ISNA"
     MWL = "MWL"
-    UMM_AL_QURA = "Umm al-Qura"
-    EGYPTIAN = "Egyptian"
+    ISNA = "ISNA"
+    EGYPT = "Egypt"
+    MAKKAH = "Makkah"
     KARACHI = "Karachi"
     TEHRAN = "Tehran"
     JAFARI = "Jafari"
+
+class AsrMethod(str, Enum):
+    STANDARD = "Standard"
+    HANAFI = "Hanafi"
 
 class PrayerTimeRequest(BaseModel):
     latitude: float = Field(
@@ -25,39 +29,31 @@ class PrayerTimeRequest(BaseModel):
         ge=-180,
         le=180
     )
-    elevation: int = Field(
-        default=1753,
+    elevation: float = Field(
+        default=0,
         description="Elevation in meters",
-        ge=-420,  # Dead Sea is lowest point on Earth
-        le=8848   # Mount Everest height
-    )
-    temperature: int = Field(
-        default=20,
-        description="Temperature in celsius",
-        ge=-89,  # Lowest recorded temperature
-        le=57    # Highest recorded temperature
-    )
-    pressure: int = Field(
-        default=102,
-        description="Atmospheric pressure in kPa",
-        ge=87,   # Minimum reasonable pressure
-        le=108   # Maximum reasonable pressure
+        ge=-420,
+        le=8848
     )
     date: datetime = Field(
-        default_factory=lambda: datetime.now(),
-        description="Date for prayer calculation (defaults to noon today)"
+        default_factory=datetime.now,
+        description="Date for prayer calculation"
     )
     method: CalculationMethod = Field(
-        default=CalculationMethod.EGYPTIAN,
-        description="Prayer time calculation method"
+        default=CalculationMethod.MWL,
+        description="Prayer calculation method"
     )
-    asr_type: int = Field(
-        default=0,
-        description="Asr calculation type",
-        ge=0,
-        le=1
+    asr_method: AsrMethod = Field(
+        default=AsrMethod.STANDARD,
+        description="Asr calculation method"
     )
-    find_local_tz: bool = Field(
-        default=True,
-        description="Auto-detect timezone"
+    timezone: float = Field(
+        default=2.0,
+        description="Timezone offset from UTC"
     )
+
+    def get_coordinates(self) -> Tuple[float, float, float]:
+        return (self.latitude, self.longitude, self.elevation)
+    
+    def get_date_tuple(self) -> Tuple[int, int, int]:
+        return (self.date.year, self.date.month, self.date.day)

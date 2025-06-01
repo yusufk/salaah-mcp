@@ -1,13 +1,19 @@
 # Salaah MCP (Muslim Community Prayer Times)
 
-A FastAPI and MCP service providing Islamic prayer times calculations using the [islamic_times](https://github.com/hassantahan/islamic_times) library.
+A FastAPI and MCP service providing Islamic prayer times calculations using the [PrayTimes.org](http://praytimes.org/) library.
+
+## Acknowledgments
+
+Prayer time calculations are powered by [PrayTimes.org](http://praytimes.org/)
+- Copyright (C) 2007-2011 PrayTimes.org
+- Licensed under GNU LGPL v3.0
+- Original work by Hamid Zarrabi-Zadeh
 
 ## Dependencies
 
 This project relies on the following main dependencies:
-- [FastAPI](https://fastapi.tiangolo.com/): Web framework for building APIs
-- [FastAPI MCP](https://github.com/tadata-org/fastapi_mcp): Model Control Protocol
-- [islamic_times](https://github.com/hassantahan/islamic_times): Core calculation engine for prayer times
+- FastAPI: Web framework for building APIs
+- FastAPI MCP: Muslim Community Platform integration
 - Pydantic: Data validation
 
 ## Installation
@@ -15,7 +21,7 @@ This project relies on the following main dependencies:
 1. Clone the repository
 2. Install dependencies:
 ```bash
-pip install fastapi uvicorn islamic_times
+pip install fastapi uvicorn
 pip install git+https://github.com/tadata-org/fastapi_mcp.git
 ```
 
