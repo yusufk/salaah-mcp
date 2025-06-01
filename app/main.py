@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 app = FastAPI()
 app.title = "Salaah MCP API"
 app.description = "API for calculating Islamic prayer times using the Salaah MCP library."
-mcp = FastApiMCP(app)
+
 
 @app.post("/prayer_times", response_model=PrayerTimeResponse, operation_id="getPrayerTimes")
 def get_prayer_times(request: PrayerTimeRequest):
@@ -66,4 +66,5 @@ def get_prayer_times(request: PrayerTimeRequest):
         raise HTTPException(status_code=500, detail=str(e))
     
 # Mount the MCP server directly to your FastAPI app
+mcp = FastApiMCP(app)
 mcp.mount()

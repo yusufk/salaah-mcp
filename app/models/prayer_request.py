@@ -48,7 +48,7 @@ class PrayerTimeRequest(BaseModel):
         description="Date for prayer calculation (defaults to noon today)"
     )
     method: CalculationMethod = Field(
-        default=CalculationMethod.EGYPTIAN,
+        default=CalculationMethod.KARACHI,
         description="Prayer time calculation method"
     )
     asr_type: int = Field(
