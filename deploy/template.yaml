@@ -1,14 +1,18 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: Salaah MCP - Islamic Prayer Times API
+Description: Salaah MCP - Islamic Prayer Times API (Cost Optimized)
 
 Globals:
   Function:
-    Timeout: 30
-    MemorySize: 256
+    Timeout: 15
+    MemorySize: 128
     Runtime: python3.12
     Architectures:
       - x86_64
+    LoggingConfig:
+      LogGroup:
+        LogGroupName: !Sub "/aws/lambda/${AWS::StackName}"
+        RetentionInDays: 7
 
 Resources:
   SalaahMCPFunction:
@@ -18,7 +22,7 @@ Resources:
       Handler: app.main.handler
       Events:
         ApiEvent:
-          Type: Api
+          Type: HttpApi
           Properties:
             Path: /{proxy+}
             Method: ANY
@@ -29,7 +33,7 @@ Resources:
 Outputs:
   SalaahMCPApi:
     Description: API Gateway endpoint URL for Salaah MCP
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+    Value: !Sub "https://${ServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com/"
   SalaahMCPFunction:
     Description: Lambda Function ARN
     Value: !GetAtt SalaahMCPFunction.Arn
