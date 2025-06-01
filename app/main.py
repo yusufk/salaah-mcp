@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi_mcp import FastApiMCP
 from islamic_times.islamic_times import ITLocation
 from pydantic import ValidationError
 from app.models.prayer_request import PrayerTimeRequest
@@ -14,8 +15,11 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
+app.title = "Salaah MCP API"
+app.description = "API for calculating Islamic prayer times using the Salaah MCP library."
+mcp = FastApiMCP(app)
 
-@app.post("/prayer_times", response_model=PrayerTimeResponse)
+@app.post("/prayer_times", response_model=PrayerTimeResponse, operation_id="getPrayerTimes")
 def get_prayer_times(request: PrayerTimeRequest):
     try:
         logger.info(f"Processing prayer time request for date: {request.date}")
@@ -60,3 +64,6 @@ def get_prayer_times(request: PrayerTimeRequest):
     except Exception as e:
         logger.error(f"Error calculating prayer times: {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
+    
+# Mount the MCP server directly to your FastAPI app
+mcp.mount()
