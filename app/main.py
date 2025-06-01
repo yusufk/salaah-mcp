@@ -64,7 +64,7 @@ def get_prayer_times(request: PrayerTimeRequest):
         raise HTTPException(status_code=500, detail=str(e))
     
 
-@app.post("/qiblah", response_model=QiblahResponse)
+@app.post("/qiblah", response_model=QiblahResponse, operation_id="getQiblahDirection")
 def get_qiblah(request: LocationRequest):
     try:
         location = ITLocation(
@@ -102,7 +102,7 @@ def get_qiblah(request: LocationRequest):
         logger.error(f"Error calculating qiblah: {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.post("/sun", response_model=SunResponse)
+@app.post("/sun", response_model=SunResponse, operation_id="getSunInfo")
 def get_sun_info(request: LocationRequest):
     try:
         location = ITLocation(
@@ -131,7 +131,7 @@ def get_sun_info(request: LocationRequest):
         logger.error(f"Error calculating sun info: {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.post("/moon", response_model=MoonResponse)
+@app.post("/moon", response_model=MoonResponse, operation_id="getMoonInfo")
 def get_moon_info(request: LocationRequest):
     try:
         location = ITLocation(
@@ -163,7 +163,7 @@ def get_moon_info(request: LocationRequest):
         logger.error(f"Error calculating moon info: {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.post("/moon/visibility", response_model=list[MoonVisibilityResponse])
+@app.post("/moon/visibility", response_model=list[MoonVisibilityResponse], operation_id="getMoonVisibility")
 def get_moon_visibility(request: MoonVisibilityRequest):
     try:
         location = ITLocation(
