@@ -12,6 +12,13 @@ class CalculationMethod(str, Enum):
     TEHRAN = "Tehran"
     JAFARI = "Jafari"
 
+class AsrMethodType(str, Enum):
+    SHAFI = "SHAFI"      # Standard method for Shafi'i, Maliki, and Hanbali schools
+    HANAFI = "HANAFI"    # Method for Hanafi school
+
+    def to_int(self) -> int:
+        return 1 if self == AsrMethodType.HANAFI else 0
+
 class PrayerTimeRequest(BaseModel):
     latitude: float = Field(
         default=-26.1528113,  # Johannesburg
@@ -53,11 +60,9 @@ class PrayerTimeRequest(BaseModel):
         default=CalculationMethod.KARACHI,
         description="Prayer time calculation method"
     )
-    asr_type: Optional[int] = Field(
-        default=0,
-        description="Asr calculation type",
-        ge=0,
-        le=1
+    asr_type: Optional[AsrMethodType] = Field(
+        default=AsrMethodType.SHAFI,
+        description="Asr calculation method (SHAFI for Shafi'i/Maliki/Hanbali, HANAFI for Hanafi school)"
     )
     find_local_tz: Optional[bool] = Field(
         default=True,

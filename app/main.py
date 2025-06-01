@@ -31,7 +31,7 @@ def get_prayer_times(request: PrayerTimeRequest):
             pressure=request.pressure,
             date=request.date,
             method=request.method,
-            asr_type=request.asr_type,
+            asr_type=request.asr_type.to_int() if request.asr_type else 0,
             find_local_tz=request.find_local_tz
         )
 
