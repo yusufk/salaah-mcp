@@ -427,6 +427,7 @@ prayTimes = PrayTimes()
 if __name__ == "__main__":
 	from datetime import date
 	print('Prayer Times for today in Johannesburg/ZA\n'+ ('='* 41))
-	times = prayTimes.getTimes(date.today(), (-26, 28), +2);
+	pt = PrayTimes('Karachi')
+	times = pt.getTimes(date.today(), (-26, 28), +2);
 	for i in ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha', 'Midnight']:
 		print(i+ ': '+ times[i.lower()])
