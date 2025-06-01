@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi_mcp import FastApiMCP
-from app.tools.praytimes import PrayTimes
+from pyIslam.praytimes import PrayerConf, Prayer, LIST_FAJR_ISHA_METHODS
 from app.models.prayer_request import PrayerTimeRequest
 from app.models.prayer_response import PrayerTimeResponse
 import logging
@@ -16,33 +16,51 @@ app = FastAPI()
 app.title = "Salaah MCP API"
 app.description = "API for calculating Islamic prayer times using the Salaah MCP library."
 
-@app.post("/prayer_times", response_model=PrayerTimeResponse, operation_id="getPrayerTimes")
+@app.post("/prayer_times", response_model=PrayerTimeResponse)
 def get_prayer_times(request: PrayerTimeRequest):
     try:
         logger.info(f"Processing prayer time request for date: {request.date}")
         
-        # Initialize PrayTimes with the requested method
-        prayer_calc = PrayTimes(request.method.value)
-        
-        # Set Asr calculation method
-        prayer_calc.adjust({'asr': request.asr_method.value})
-        
-        # Calculate prayer times
-        times = prayer_calc.getTimes(
-            request.get_date_tuple(),
-            request.get_coordinates(),
-            request.timezone
-        )
-        
-        logger.debug(f"Calculated prayer times: {times}")
-        
-        # Create response with method and times
-        response_data = {
-            'method': prayer_calc.getMethod(),
-            **times  # Prayer times are already using correct keys
+        # Start with required fields
+        conf_params = {
+            "longitude": request.longitude,
+            "latitude": request.latitude,
+            "timezone": request.timezone
         }
         
-        return PrayerTimeResponse(**response_data)
+        # Set method_index after configuring PrayerConf
+        method_index = 0  # default to EGYPT_SURVEY
+        
+        # Add calculation method if specified
+        if request.angle_ref is not None:
+            angle_ref = request.angle_ref.to_int()
+            conf_params["angle_ref"] = angle_ref
+            method_index = angle_ref - 1  # Update method_index based on the actual method
+            
+        if request.asr_madhab is not None:
+            conf_params["asr_madhab"] = request.asr_madhab.to_int()
+            
+        if request.enable_summer_time is not None:
+            conf_params["enable_summer_time"] = request.enable_summer_time
+        
+        conf = PrayerConf(**conf_params)
+        prayer = Prayer(conf, request.date)
+        
+        # Use the correct method_index for response
+        times = {
+            'method': LIST_FAJR_ISHA_METHODS[method_index].organizations[0],
+            'fajr': str(prayer.fajr_time()),
+            'sherook': str(prayer.sherook_time()),
+            'dohr': str(prayer.dohr_time()),
+            'asr': str(prayer.asr_time()),
+            'maghreb': str(prayer.maghreb_time()),
+            'ishaa': str(prayer.ishaa_time()),
+            'midnight': str(prayer.midnight()),
+            'qiyam': str(prayer.last_third_of_night())
+        }
+        
+        logger.debug(f"Calculated prayer times: {times}")
+        return PrayerTimeResponse(**times)
         
     except Exception as e:
         logger.error(f"Error calculating prayer times: {str(e)}", exc_info=True)

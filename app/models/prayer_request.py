@@ -1,59 +1,63 @@
 from pydantic import BaseModel, Field
 from datetime import datetime
 from enum import Enum
-from typing import Tuple
+from typing import Optional
 
-class CalculationMethod(str, Enum):
-    MWL = "MWL"
-    ISNA = "ISNA"
-    EGYPT = "Egypt"
-    MAKKAH = "Makkah"
-    KARACHI = "Karachi"
-    TEHRAN = "Tehran"
-    JAFARI = "Jafari"
+class Method(str, Enum):
+    KARACHI = "KARACHI"          # UISK (1)
+    MUSLIM_LEAGUE = "MWL"        # Muslim World League (2)
+    EGYPT_SURVEY = "EGYPT"       # Egyptian General Authority of Survey (3)
+    UMM_ALQURA = "UMM_ALQURA"   # Umm al-Qura University, Makkah (4)
+    ISNA = "ISNA"               # Islamic Society of North America (5)
+    
+    def to_int(self) -> int:
+        return {
+            "KARACHI": 1,        # University of Islamic Sciences, Karachi
+            "MWL": 2,           # Muslim World League
+            "EGYPT": 3,         # Egyptian General Authority of Survey
+            "UMM_ALQURA": 4,    # Umm al-Qura University, Makkah
+            "ISNA": 5           # Islamic Society of North America
+        }[self.value]
 
 class AsrMethod(str, Enum):
-    STANDARD = "Standard"
-    HANAFI = "Hanafi"
+    STANDARD = "STANDARD"    # Shafii, Maliki, Hambali
+    HANAFI = "HANAFI"       # Hanafi
+    
+    def to_int(self) -> int:
+        return {"STANDARD": 1, "HANAFI": 2}[self.value]
 
 class PrayerTimeRequest(BaseModel):
     latitude: float = Field(
-        default=-26.1528113,
+        default=-26.1528113,  # Johannesburg
         description="Latitude of location",
         ge=-90,
         le=90
     )
     longitude: float = Field(
-        default=28.0049996,
+        default=28.0049996,   # Johannesburg
         description="Longitude of location",
         ge=-180,
         le=180
     )
-    elevation: float = Field(
-        default=0,
-        description="Elevation in meters",
-        ge=-420,
-        le=8848
+    timezone: Optional[float] = Field(
+        default=2.0,          # South Africa timezone
+        description="Timezone offset from UTC"
     )
-    date: datetime = Field(
+    angle_ref: Optional[Method] = Field(
+        default=Method.KARACHI,
+        alias="calculation_method",
+        description="Prayer calculation method"
+    )
+    asr_madhab: Optional[AsrMethod] = Field(
+        default=AsrMethod.HANAFI,
+        alias="madhab",
+        description="Madhab for Asr calculation (SHAFI or HANAFI)"
+    )
+    enable_summer_time: Optional[bool] = Field(
+        default=False,
+        description="Enable summer time adjustments"
+    )
+    date: Optional[datetime] = Field(
         default_factory=datetime.now,
         description="Date for prayer calculation"
     )
-    method: CalculationMethod = Field(
-        default=CalculationMethod.MWL,
-        description="Prayer calculation method"
-    )
-    asr_method: AsrMethod = Field(
-        default=AsrMethod.STANDARD,
-        description="Asr calculation method"
-    )
-    timezone: float = Field(
-        default=2.0,
-        description="Timezone offset from UTC"
-    )
-
-    def get_coordinates(self) -> Tuple[float, float, float]:
-        return (self.latitude, self.longitude, self.elevation)
-    
-    def get_date_tuple(self) -> Tuple[int, int, int]:
-        return (self.date.year, self.date.month, self.date.day)

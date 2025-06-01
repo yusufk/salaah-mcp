@@ -13,12 +13,11 @@ class MoonVisibility(BaseModel):
 
 class PrayerTimeResponse(BaseModel):
     method: str
-    imsak: str
     fajr: str
-    sunrise: str
-    dhuhr: str
+    sherook: str
+    dohr: str
     asr: str
-    sunset: str
-    maghrib: str
-    isha: str
+    maghreb: str
+    ishaa: str
     midnight: str
+    qiyam: str
