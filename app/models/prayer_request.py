@@ -43,9 +43,9 @@ class PrayerTimeRequest(BaseModel):
         ge=87,   # Minimum reasonable pressure
         le=108   # Maximum reasonable pressure
     )
-    date: Optional[str] = Field(
-        default_factory=lambda: datetime.now().strftime("%Y-%m-%d"),
-        description="Date in YYYY-MM-DD format"
+    date: datetime = Field(
+        default_factory=lambda: datetime.now(),
+        description="Date for prayer calculation (defaults to noon today)"
     )
     method: CalculationMethod = Field(
         default=CalculationMethod.EGYPTIAN,
