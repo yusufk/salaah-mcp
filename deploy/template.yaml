@@ -6,7 +6,7 @@ Globals:
   Function:
     Timeout: 30
     MemorySize: 256
-    Runtime: python3.9
+    Runtime: python3.12
     Architectures:
       - x86_64
 
@@ -15,7 +15,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: ../
-      Handler: app.handler
+      Handler: app.main.handler
       Events:
         ApiEvent:
           Type: Api
