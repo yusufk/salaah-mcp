@@ -13,51 +13,52 @@ class CalculationMethod(str, Enum):
     JAFARI = "Jafari"
 
 class PrayerTimeRequest(BaseModel):
+    # Required fields
     latitude: float = Field(
-        default=-26.1528113,
         description="Latitude of location",
         ge=-90,
         le=90
     )
     longitude: float = Field(
-        default=28.0049996,
         description="Longitude of location",
         ge=-180,
         le=180
     )
-    elevation: int = Field(
+    
+    # Optional fields with defaults
+    elevation: Optional[int] = Field(
         default=1753,
         description="Elevation in meters",
         ge=-420,  # Dead Sea is lowest point on Earth
         le=8848   # Mount Everest height
     )
-    temperature: int = Field(
+    temperature: Optional[int] = Field(
         default=20,
         description="Temperature in celsius",
         ge=-89,  # Lowest recorded temperature
         le=57    # Highest recorded temperature
     )
-    pressure: int = Field(
+    pressure: Optional[int] = Field(
         default=102,
         description="Atmospheric pressure in kPa",
         ge=87,   # Minimum reasonable pressure
         le=108   # Maximum reasonable pressure
     )
-    date: datetime = Field(
-        default_factory=lambda: datetime.now(),
-        description="Date for prayer calculation (defaults to noon today)"
+    date: Optional[datetime] = Field(
+        default_factory=datetime.now,
+        description="Date for prayer calculation (defaults to current time)"
     )
-    method: CalculationMethod = Field(
+    method: Optional[CalculationMethod] = Field(
         default=CalculationMethod.KARACHI,
         description="Prayer time calculation method"
     )
-    asr_type: int = Field(
+    asr_type: Optional[int] = Field(
         default=0,
         description="Asr calculation type",
         ge=0,
         le=1
     )
-    find_local_tz: bool = Field(
+    find_local_tz: Optional[bool] = Field(
         default=True,
         description="Auto-detect timezone"
     )
