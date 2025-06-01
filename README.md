@@ -36,11 +36,13 @@ The API will be available at:
 - Development: http://localhost:8000
 - Production: http://localhost:8000 (configurable via UVV_PORT environment variable)
 
-## API
+## API Endpoints
 
 ### Calculate Prayer Times
 
 `POST /prayer_times`
+
+Calculate prayer times for a given location and date.
 
 Example request:
 ```json
@@ -64,6 +66,111 @@ Example response:
   "isha": "2025-06-01T18:43:09.341111+02:00",
   "midnight": "2025-06-02T00:06:02.228763+02:00"
 }
+```
+
+### Get Qiblah Direction
+
+`POST /qiblah`
+
+Get Qiblah direction and distance from any location.
+
+```json
+{
+  "latitude": -26.1528113,
+  "longitude": 28.0049996,
+  "date": "2025-06-01T00:00:00Z"
+}
+```
+
+Example response:
+```json
+{
+  "distance_km": 5452,
+  "distance_mi": 3388,
+  "direction": "NNE",
+  "angle_decimal": 14.647,
+  "angle_dms": "014° 38′ 49.84″"
+}
+```
+
+### Get Sun Information
+
+`POST /sun`
+
+Get detailed sun position and timing information.
+
+Example response:
+```json
+{
+  "sunrise": "2025-06-01T06:47:40",
+  "transit": "2025-06-01T12:05:33",
+  "sunset": "2025-06-01T17:23:36",
+  "apparent_altitude": -42.659,
+  "apparent_azimuth": 276.796,
+  "distance_au": 1.014106,
+  "apparent_declination": 22.166,
+  "apparent_right_ascension": "04h 39m 56.17s",
+  "greenwich_hour_angle": 99.904,
+  "local_hour_angle": 127.951
+}
+```
+
+### Get Moon Information
+
+`POST /moon`
+
+Get detailed moon position and phase information.
+
+Example response:
+```json
+{
+  "moonrise": "2025-06-01T11:39:22",
+  "transit": "2025-06-01T16:25:15",
+  "moonset": "2025-06-01T22:54:19",
+  "illumination": 36.38,
+  "apparent_altitude": 25.803,
+  "azimuth": 305.203,
+  "distance_km": 388391,
+  "parallax": 0.941,
+  "topocentric_declination": 15.892,
+  "topocentric_right_ascension": "09h 52m 04.77s",
+  "greenwich_hour_angle": 21.198,
+  "local_hour_angle": 49.245
+}
+```
+
+### Calculate Moon Visibility
+
+`POST /moon/visibility`
+
+Calculate new moon visibility using Yallop's criterion.
+
+```json
+{
+  "latitude": -26.1528113,
+  "longitude": 28.0049996,
+  "date": "2025-05-27T00:00:00Z",
+  "days": 3,
+  "criterion": 1
+}
+```
+
+Example response:
+```json
+[
+  {
+    "criterion": "Yallop",
+    "date": "2025-05-27T15:28:52",
+    "value": -0.788,
+    "description": "F: Not visible; below the Danjon limit."
+  },
+  {
+    "criterion": "Yallop",
+    "date": "2025-05-28T15:56:44",
+    "value": 0.958,
+    "description": "A: Easily visible."
+  }
+]
 ```
 
 ## Available Calculation Methods
