@@ -12,6 +12,7 @@ sam deploy \
   --stack-name salaah-mcp \
   --region eu-west-1 \
   --capabilities CAPABILITY_IAM \
-  --no-confirm-changeset
+  --no-confirm-changeset \
+  --resolve-s3
 
 echo "Deployment completed successfully!"
