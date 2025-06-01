@@ -143,7 +143,6 @@ def get_moon_info(request: LocationRequest):
             date=request.date
         )
         moon_info = location.moon()
-        logger.debug(f"Moon info attributes: {dir(moon_info)}")  # Debug available attributes
         
         return MoonResponse(
             moonrise=moon_info.moonrise,
@@ -155,7 +154,7 @@ def get_moon_info(request: LocationRequest):
             distance_km=float(str(moon_info.geocentric_distance).split()[0]),
             parallax=float(moon_info.parallax.decimal),
             topocentric_declination=float(moon_info.topocentric_declination.decimal),
-            topocentric_right_ascension=str(moon_info.apparent_right_ascension),
+            topocentric_right_ascension=str(moon_info.topocentric_right_ascension),  # Changed from apparent to topocentric
             greenwich_hour_angle=float(moon_info.greenwich_hour_angle.decimal),
             local_hour_angle=float(moon_info.local_hour_angle.decimal)
         )
