@@ -35,24 +35,22 @@ def get_prayer_times(request: PrayerTimeRequest):
             find_local_tz=request.find_local_tz
         )
 
+        # Configure the sunset angle after initialization if needed
+        if request.sunset_angle != 0:
+            location.sunset_angle = request.sunset_angle
+
         prayers = location.prayer_times()
         
-        def validate_prayer_time(prayer_attr):
-            value = getattr(prayers, prayer_attr, None)
-            if hasattr(value, 'time'):
-                return value.time
-            return str(value) if value else None
-
         prayer_data = {
             'method': str(prayers.method),
-            'fajr': validate_prayer_time('fajr'),
-            'sunrise': validate_prayer_time('sunrise'),
-            'zuhr': validate_prayer_time('zuhr'),
-            'asr': validate_prayer_time('asr'),
-            'sunset': validate_prayer_time('sunset'),
-            'maghrib': validate_prayer_time('maghrib'),
-            'isha': validate_prayer_time('isha'),
-            'midnight': validate_prayer_time('midnight')
+            'fajr': prayers.fajr.time if hasattr(prayers.fajr, 'time') else str(prayers.fajr) if prayers.fajr else None,
+            'sunrise': prayers.sunrise.time if hasattr(prayers.sunrise, 'time') else str(prayers.sunrise) if prayers.sunrise else None,
+            'zuhr': prayers.zuhr.time if hasattr(prayers.zuhr, 'time') else str(prayers.zuhr) if prayers.zuhr else None,
+            'asr': prayers.asr.time if hasattr(prayers.asr, 'time') else str(prayers.asr) if prayers.asr else None,
+            'sunset': prayers.sunset.time if hasattr(prayers.sunset, 'time') else str(prayers.sunset) if prayers.sunset else None,
+            'maghrib': prayers.maghrib.time if hasattr(prayers.maghrib, 'time') else str(prayers.maghrib) if prayers.maghrib else None,
+            'isha': prayers.isha.time if hasattr(prayers.isha, 'time') else str(prayers.isha) if prayers.isha else None,
+            'midnight': prayers.midnight.time if hasattr(prayers.midnight, 'time') else str(prayers.midnight) if prayers.midnight else None
         }
         
         logger.debug(f"Converted prayer data: {prayer_data}")
