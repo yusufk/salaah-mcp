@@ -34,11 +34,7 @@ def get_prayer_times(request: PrayerTimeRequest):
             asr_type=request.asr_type.to_int() if request.asr_type else 0,
             find_local_tz=request.find_local_tz
         )
-
-        # Configure the sunset angle after initialization if needed
-        if request.sunset_angle != 0:
-            location.sunset_angle = request.sunset_angle
-
+        
         prayers = location.prayer_times()
         
         prayer_data = {
