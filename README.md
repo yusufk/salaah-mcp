@@ -2,6 +2,8 @@
 
 A FastAPI and MCP service providing Islamic prayer times calculations using the [islamic_times](https://github.com/hassantahan/islamic_times) library.
 
+![Screenshot](screenshot.png)
+
 ## Dependencies
 
 This project relies on the following main dependencies:
