@@ -14,24 +14,33 @@ This project relies on the following main dependencies:
 
 ## Installation
 
-1. Clone the repository
-2. Install dependencies:
+1. Clone the repository:
 ```bash
-pip install fastapi uvicorn islamic_times
-pip install git+https://github.com/tadata-org/fastapi_mcp.git
+git clone https://github.com/yourusername/salaah-mcp.git
+cd salaah-mcp
+```
+
+2. Install uvv and dependencies:
+```bash
+pip install uv
+uv install
 ```
 
 ## Usage
 
-Run the server:
+Start the development server:
 ```bash
-python run.py
+uv dev
 ```
 
-Or with uvicorn directly:
+Or run in production mode:
 ```bash
-uvicorn app.main:app --reload
+uv start
 ```
+
+The API will be available at:
+- Development: http://localhost:8000
+- Production: http://localhost:8000 (configurable via UVV_PORT environment variable)
 
 ## API
 

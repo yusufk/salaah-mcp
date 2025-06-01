@@ -6,7 +6,7 @@ requires-python = ">=3.12"
 dependencies = [
     "fastapi>=0.109.0",
     "uvicorn>=0.27.0",
-    "islamic-times>=1.1.4",
+    "islamic-times>=2.0.6",
     "pydantic>=2.5.3",
     "fastapi-mcp>=0.3.4",
 ]
