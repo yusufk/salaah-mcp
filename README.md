@@ -81,3 +81,35 @@ Example response:
 - KARACHI: University of Islamic Sciences, Karachi
 - TEHRAN: Institute of Geophysics, University of Tehran
 - JAFARI: Shia Ithna Ashari, Leva Research Institute, Qom
+
+## Claude Desktop Integration
+
+To use the prayer times service with Claude Desktop:
+
+1. Create a configuration file:
+```json
+{
+  "mcpServers": {
+    "Salaah Times": {
+      "command": "/Users/yusuf/.local/bin/mcp-proxy",
+      "env": {
+        "SSE_URL": "http://localhost:8000/mcp"
+      }
+    }
+  }
+}
+```
+
+2. Save this as `claude_desktop_config.json` in your Claude Desktop configuration directory.
+
+3. Make sure the MCP service is running:
+```bash
+uv run run.py
+```
+
+4. Start Claude Desktop and you can now ask questions about prayer times like:
+- "What time is Asr prayer today?"
+- "When is Fajr tomorrow in Johannesburg?"
+- "Show me all prayer times for London"
+
+The AI will use the MCP service to calculate accurate prayer times based on your queries.
