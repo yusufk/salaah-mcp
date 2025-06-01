@@ -13,13 +13,14 @@ class CalculationMethod(str, Enum):
     JAFARI = "Jafari"
 
 class PrayerTimeRequest(BaseModel):
-    # Required fields
     latitude: float = Field(
+        default=-26.1528113,  # Johannesburg
         description="Latitude of location",
         ge=-90,
         le=90
     )
     longitude: float = Field(
+        default=28.0049996,   # Johannesburg
         description="Longitude of location",
         ge=-180,
         le=180
