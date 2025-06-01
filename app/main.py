@@ -6,6 +6,9 @@ from app.models.prayer_request import PrayerTimeRequest
 from app.models.prayer_response import PrayerTimeResponse
 import logging
 from datetime import datetime
+import os
+from mangum import Mangum
+from run import app as fastapi_app
 
 # Initialize logging with more details
 logging.basicConfig(
@@ -68,3 +71,4 @@ def get_prayer_times(request: PrayerTimeRequest):
 # Mount the MCP server directly to your FastAPI app
 mcp = FastApiMCP(app)
 mcp.mount()
+handler = Mangum(app)

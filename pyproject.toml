@@ -9,6 +9,7 @@ dependencies = [
     "islamic-times>=2.0.6",
     "pydantic>=2.5.3",
     "fastapi-mcp>=0.3.4",
+    "mangum>=0.19.0",
 ]
 
 [build-system]
