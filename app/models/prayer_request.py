@@ -68,3 +68,9 @@ class PrayerTimeRequest(BaseModel):
         default=True,
         description="Auto-detect timezone"
     )
+    sunset_angle: Optional[float] = Field(
+        default=0.0,
+        description="Angle of sun below horizon for sunset/maghrib (0° means actual sunset)",
+        ge=-10,
+        le=10
+    )
