@@ -327,7 +327,7 @@ wheels = [
 
 [[package]]
 name = "islamic-times"
-version = "2.0.7"
+version = "2.0.8"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "geopandas" },
@@ -337,16 +337,16 @@ dependencies = [
     { name = "shapely" },
     { name = "timezonefinder" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/49/38/a573999fc7eef94bd7031a70c959a16f5f810ae9ca0b3b91783acd5ca5b7/islamic_times-2.0.7.tar.gz", hash = "sha256:d904013b6e2fc0906d2ea85ed462ddf056abd69e7b11f6b258dcb90d3b184aa0", size = 23775069 }
+sdist = { url = "https://files.pythonhosted.org/packages/e7/fc/5ca04e27bfb3ee21a60decce68c37f18c4323974e6406d5029564a6c5c18/islamic_times-2.0.8.tar.gz", hash = "sha256:52cda6d7521fcc92f2df85f9d5f84514852a03dce98cc0f97f1e5352b3834fb4", size = 23775406 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/45/52/79d93bd32e4438a4ae1c10246be10fec713b0dd45a8121ef5d815eb7dfca/islamic_times-2.0.7-cp312-cp312-macosx_10_9_x86_64.whl", hash = "sha256:8d1c17c82c471473553d4f422e154ab67c7119844061e32d47b9e5c36478f357", size = 73066 },
-    { url = "https://files.pythonhosted.org/packages/84/ba/d67cf2fa772d412ab7bb3942beabcb98d84ddd2477c8dfd4c161fa074658/islamic_times-2.0.7-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:54008aa2c5b55ba929e90720a2be1bdd5430e9a56a72ade8cfcfbb7964f3001e", size = 72171 },
-    { url = "https://files.pythonhosted.org/packages/3b/ee/3c0d7d0bd727b98bac5ab72c40ac1030b769ea463499919f5426a7877e36/islamic_times-2.0.7-cp312-cp312-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:46cfb40f11ac5e489a551140336393b6b747a4290eebeecc5cea058760e84049", size = 142552 },
-    { url = "https://files.pythonhosted.org/packages/a6/e3/078eb6aabea37eaf9c4c0d85a588ce50184a2bdee48b7b77ad10672ceafc/islamic_times-2.0.7-cp312-cp312-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:4377b0ca0821d3359805c1ef48c20b1db7261f40db107fc023488c3ef24dabfe", size = 152221 },
-    { url = "https://files.pythonhosted.org/packages/9d/31/38452c4a0ea585602ec13fc38fcf2dc6087cd99f25b26a8822fbb21ce52d/islamic_times-2.0.7-cp312-cp312-musllinux_1_1_i686.whl", hash = "sha256:cd99c9d2067e6f27d7e249e3c82cc9248be68b38effb5ba001e0e915bbf51a10", size = 154742 },
-    { url = "https://files.pythonhosted.org/packages/d8/20/f2b934e7e27279c12fd552d984bd4796efe578e7a5699c24eaea2ae45f88/islamic_times-2.0.7-cp312-cp312-musllinux_1_1_x86_64.whl", hash = "sha256:d9d3efe7896edf37df46369c784d223a4e42e8de94ad6cf338e886870fdc0899", size = 168953 },
-    { url = "https://files.pythonhosted.org/packages/95/dc/ebab6c2f18ae44ceaaa835382aceb27973c91aafe07d51b3e287c1713f0d/islamic_times-2.0.7-cp312-cp312-win32.whl", hash = "sha256:cbd4bd98f5c56974f83778584c1eac1c2bb7085392dce46de4f7711943ffc163", size = 220243 },
-    { url = "https://files.pythonhosted.org/packages/ce/cd/ae38dd00cad08e87144ea5e3aabf6a183452e10d9022f03e8a6ab9b18a70/islamic_times-2.0.7-cp312-cp312-win_amd64.whl", hash = "sha256:a49209120d71dbc2edbc1a8e4683339a72767a2dfc081f5a7929f209aeac7a67", size = 222340 },
+    { url = "https://files.pythonhosted.org/packages/e3/ef/50585d967eba20ccd2c8b91e76bfd71fff8c8d6fa3d23d738d85442aa48e/islamic_times-2.0.8-cp312-cp312-macosx_10_9_x86_64.whl", hash = "sha256:08e9a24d07876bac4fb8551c7f8e5d9412a595f43c1148dca23374cd73e55b66", size = 73182 },
+    { url = "https://files.pythonhosted.org/packages/32/98/7d4576273134c2d7fa06d0cf8b4e351584a6ea702d9436418751d7e154a9/islamic_times-2.0.8-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:b01556f6ba6f79b4dd36ec796e025a589574cddac9598aaf6604ca04472f495e", size = 72283 },
+    { url = "https://files.pythonhosted.org/packages/74/bd/f5a6d69fae615c5c5d543a09147af564d70f3a977bd3dba9ce11e6217d22/islamic_times-2.0.8-cp312-cp312-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:64b085daf0611db0a9205be7e228984425ad2e6a2ed7383ca53807d8fd40d589", size = 142663 },
+    { url = "https://files.pythonhosted.org/packages/0b/4e/91d247c7a68c116e813b963fb38c73c4b80b77c280d580bc87af35e4bed5/islamic_times-2.0.8-cp312-cp312-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:97616093dbb866d76803740e3e664271635f6447f07cc396c4140f7f3032326f", size = 152332 },
+    { url = "https://files.pythonhosted.org/packages/6f/7e/3475c9d5de2eecb95d2d277345387a675af6e05e6816e17c7fb811616d3b/islamic_times-2.0.8-cp312-cp312-musllinux_1_1_i686.whl", hash = "sha256:8d9356e4846417aaa2f36cc957db56eb5d3825593db2285edd92ed682fc49962", size = 154855 },
+    { url = "https://files.pythonhosted.org/packages/e1/72/0f80fa7124bd18fc15f7ffeb53329b71e7491efd5d39a43fca2f96f809f0/islamic_times-2.0.8-cp312-cp312-musllinux_1_1_x86_64.whl", hash = "sha256:354c8913a39a8c090cc6c5e7e46e99cc250962e184797699d08e4920698c5eb3", size = 169062 },
+    { url = "https://files.pythonhosted.org/packages/63/75/7ad538cb536d1a4c0f638355e33db5b999e76244020b576807b1a81c721e/islamic_times-2.0.8-cp312-cp312-win32.whl", hash = "sha256:b9458496dc01321369b60f55465c437508e678fcf1b0549ef69fe2a7261662e3", size = 220365 },
+    { url = "https://files.pythonhosted.org/packages/f3/71/7aa416ced12b14285643b2f50fc4f6be40b72c51fae540244cc8442892b8/islamic_times-2.0.8-cp312-cp312-win_amd64.whl", hash = "sha256:a692ea820035cfa46e9a3a8581c2cf47fe5c754bae484b2ccc681a77e3194ad7", size = 222446 },
 ]
 
 [[package]]
@@ -833,7 +833,7 @@ dependencies = [
 requires-dist = [
     { name = "fastapi", specifier = ">=0.109.0" },
     { name = "fastapi-mcp", specifier = ">=0.3.4" },
-    { name = "islamic-times", specifier = ">=2.0.6" },
+    { name = "islamic-times", specifier = ">=2.0.8" },
     { name = "pydantic", specifier = ">=2.5.3" },
     { name = "uvicorn", specifier = ">=0.27.0" },
 ]
