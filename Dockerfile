@@ -5,6 +5,11 @@ WORKDIR /app
 # Install uv
 RUN pip install --no-cache-dir uv
 
+# Create a virtual environment
+RUN python -m venv .venv
+ENV VIRTUAL_ENV=/app/.venv
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
 # Copy project files
 COPY pyproject.toml .
 
