@@ -10,6 +10,7 @@ from app.models.celestial_response import SunResponse, MoonResponse, MoonVisibil
 from app.models.moon_visibility_request import MoonVisibilityRequest
 import logging
 from datetime import datetime
+from fastapi.responses import RedirectResponse
 
 # Initialize logging with more details
 logging.basicConfig(
@@ -21,6 +22,10 @@ logger = logging.getLogger(__name__)
 app = FastAPI()
 app.title = "Salaah MCP API"
 app.description = "API for calculating Islamic prayer times using the Salaah MCP library."
+
+@app.get("/")
+async def redirect_to_docs():
+    return RedirectResponse(url="/docs")
 
 
 @app.post("/prayer_times", response_model=PrayerTimeResponse, operation_id="getPrayerTimes")
