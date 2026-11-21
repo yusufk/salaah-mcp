@@ -14,7 +14,7 @@ from fastapi.responses import RedirectResponse
 
 # Initialize logging with more details
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
@@ -47,7 +47,7 @@ def get_prayer_times(request: PrayerTimeRequest):
         prayers = location.prayer_times()
         
         prayer_data = {
-            'method': str(prayers.method),
+            'method': getattr(prayers.method, 'name', str(prayers.method)),
             'fajr': prayers.fajr.time if hasattr(prayers.fajr, 'time') else str(prayers.fajr) if prayers.fajr else None,
             'sunrise': prayers.sunrise.time if hasattr(prayers.sunrise, 'time') else str(prayers.sunrise) if prayers.sunrise else None,
             'zuhr': prayers.zuhr.time if hasattr(prayers.zuhr, 'time') else str(prayers.zuhr) if prayers.zuhr else None,
