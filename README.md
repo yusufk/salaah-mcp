@@ -16,14 +16,14 @@ This project relies on the following main dependencies:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/salaah-mcp.git
+git clone https://github.com/yusufk/salaah-mcp.git
 cd salaah-mcp
 ```
 
-2. Install uvv and dependencies:
+2. Install uv and the dependencies:
 ```bash
 pip install uv
-uv install
+uv sync
 ```
 
 ## Usage
@@ -34,7 +34,6 @@ uv run run.py
 
 The API will be available at:
 - Development: http://localhost:8000
-- Production: http://localhost:8000 (configurable via UVV_PORT environment variable)
 
 ## API Endpoints
 
@@ -49,7 +48,7 @@ Example request:
 {
   "latitude": -26.1528113,
   "longitude": 28.0049996,
-  "method": "EGYPTIAN"
+  "method": "Egyptian"
 }
 ```
 
@@ -175,13 +174,15 @@ Example response:
 
 ## Available Calculation Methods
 
-- ISNA: Islamic Society of North America
-- MWL: Muslim World League
-- UMM_AL_QURA: Umm al-Qura University, Makkah
-- EGYPTIAN: Egyptian General Authority of Survey
-- KARACHI: University of Islamic Sciences, Karachi
-- TEHRAN: Institute of Geophysics, University of Tehran
-- JAFARI: Shia Ithna Ashari, Leva Research Institute, Qom
+Pass the value in the left column as `method`:
+
+- `ISNA`: Islamic Society of North America
+- `MWL`: Muslim World League
+- `Umm al-Qura`: Umm al-Qura University, Makkah
+- `Egyptian`: Egyptian General Authority of Survey
+- `Karachi`: University of Islamic Sciences, Karachi
+- `Tehran`: Institute of Geophysics, University of Tehran
+- `Jafari`: Shia Ithna Ashari, Leva Research Institute, Qom
 
 ## Claude Desktop Integration
 
