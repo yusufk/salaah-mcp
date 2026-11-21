@@ -186,10 +186,7 @@ Pass the value in the left column as `method`:
 
 ## MCP clients
 
-The service speaks two MCP transports:
-
-- Streamable HTTP (current): `http://localhost:8000/mcp`
-- SSE (older clients): `http://localhost:8000/sse`
+The MCP server uses the Streamable HTTP transport at `http://localhost:8000/mcp`. The older SSE transport is not supported.
 
 ### Claude Desktop
 

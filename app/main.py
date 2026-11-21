@@ -202,5 +202,3 @@ def get_moon_visibility(request: MoonVisibilityRequest):
 mcp = FastApiMCP(app)
 # Streamable HTTP, the current MCP transport, at /mcp.
 mcp.mount_http()
-# The older SSE transport stays available at /sse for existing clients.
-mcp.mount_sse(mount_path="/sse")

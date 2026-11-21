@@ -59,10 +59,10 @@ def test_celestial_endpoints(path):
     assert r.json()
 
 
-def test_mcp_endpoints_are_mounted():
+def test_mcp_endpoint_is_mounted_without_sse():
     paths = {getattr(route, "path", "") for route in app.routes}
     assert "/mcp" in paths
-    assert "/sse" in paths
+    assert "/sse" not in paths
 
 
 def test_mcp_http_lists_the_tools():
