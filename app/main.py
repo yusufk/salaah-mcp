@@ -1,5 +1,4 @@
 from fastapi import FastAPI, HTTPException
-from fastapi_mcp import FastApiMCP
 from islamic_times.islamic_times import ITLocation
 from pydantic import ValidationError
 from app.models.prayer_request import PrayerTimeRequest
@@ -11,6 +10,8 @@ from app.models.moon_visibility_request import MoonVisibilityRequest
 import logging
 from datetime import datetime
 from fastapi.responses import RedirectResponse
+from contextlib import asynccontextmanager
+from app.mcp_server import mcp, http_app
 
 # Initialize logging with more details
 logging.basicConfig(
@@ -19,7 +20,17 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-app = FastAPI()
+mcp_app = http_app()
+
+
+@asynccontextmanager
+async def lifespan(_app):
+    # The MCP session manager must run for the lifetime of the app.
+    async with mcp.session_manager.run():
+        yield
+
+
+app = FastAPI(lifespan=lifespan)
 app.title = "Salaah MCP API"
 app.description = "API for calculating Islamic prayer times using the Salaah MCP library."
 
@@ -199,6 +210,5 @@ def get_moon_visibility(request: MoonVisibilityRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 # Mount the MCP server directly to your FastAPI app
-mcp = FastApiMCP(app)
-# Streamable HTTP, the current MCP transport, at /mcp.
-mcp.mount_http()
+# MCP over Streamable HTTP at /mcp. Mounted last so the REST routes above match first.
+app.mount("/", mcp_app)
