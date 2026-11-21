@@ -59,6 +59,24 @@ def test_celestial_endpoints(path):
     assert r.json()
 
 
-def test_mcp_endpoint_is_mounted():
+def test_mcp_endpoints_are_mounted():
     paths = {getattr(route, "path", "") for route in app.routes}
     assert "/mcp" in paths
+    assert "/sse" in paths
+
+
+def test_mcp_http_lists_the_tools():
+    headers = {"Accept": "application/json, text/event-stream", "Content-Type": "application/json"}
+    init = {"jsonrpc": "2.0", "id": 1, "method": "initialize",
+            "params": {"protocolVersion": "2025-06-18", "capabilities": {},
+                       "clientInfo": {"name": "test", "version": "0"}}}
+    with TestClient(app) as c:
+        r = c.post("/mcp", json=init, headers=headers)
+        assert r.status_code == 200, r.text
+        sid = r.headers.get("mcp-session-id")
+        h = {**headers, **({"mcp-session-id": sid} if sid else {})}
+        c.post("/mcp", json={"jsonrpc": "2.0", "method": "notifications/initialized"}, headers=h)
+        r = c.post("/mcp", json={"jsonrpc": "2.0", "id": 2, "method": "tools/list"}, headers=h)
+        assert r.status_code == 200, r.text
+        for tool in ("getPrayerTimes", "getQiblahDirection", "getSunInfo", "getMoonInfo", "getMoonVisibility"):
+            assert tool in r.text

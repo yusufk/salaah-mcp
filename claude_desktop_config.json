@@ -1,10 +1,8 @@
 {
   "mcpServers": {
     "Salaah Times": {
-      "command": "/Users/yusuf/.local/bin/mcp-proxy",
-      "env": {
-        "SSE_URL": "http://localhost:8000/mcp"
-      }
+      "command": "npx",
+      "args": ["mcp-remote", "http://localhost:8000/mcp"]
     }
   }
 }

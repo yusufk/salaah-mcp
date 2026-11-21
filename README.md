@@ -184,19 +184,24 @@ Pass the value in the left column as `method`:
 - `Tehran`: Institute of Geophysics, University of Tehran
 - `Jafari`: Shia Ithna Ashari, Leva Research Institute, Qom
 
-## Claude Desktop Integration
+## MCP clients
+
+The service speaks two MCP transports:
+
+- Streamable HTTP (current): `http://localhost:8000/mcp`
+- SSE (older clients): `http://localhost:8000/sse`
+
+### Claude Desktop
 
 To use the prayer times service with Claude Desktop:
 
-1. Create a configuration file:
+1. Create a configuration file. Claude Desktop starts local servers, so `mcp-remote` bridges it to the HTTP endpoint:
 ```json
 {
   "mcpServers": {
     "Salaah Times": {
-      "command": "/Users/yusuf/.local/bin/mcp-proxy",
-      "env": {
-        "SSE_URL": "http://localhost:8000/mcp"
-      }
+      "command": "npx",
+      "args": ["mcp-remote", "http://localhost:8000/mcp"]
     }
   }
 }
