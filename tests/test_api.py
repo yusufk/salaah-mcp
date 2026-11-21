@@ -8,6 +8,13 @@ from app.main import app
 
 client = TestClient(app)
 
+
+@pytest.fixture(scope="module")
+def live():
+    """One started app for the MCP tests. The SDK's session manager can only start once."""
+    with TestClient(app, base_url="http://localhost:8000") as c:
+        yield c
+
 # Johannesburg (the README example location)
 JHB = {"latitude": -26.1528113, "longitude": 28.0049996}
 DATE = "2026-11-21T00:00:00"
@@ -59,24 +66,39 @@ def test_celestial_endpoints(path):
     assert r.json()
 
 
-def test_mcp_endpoints_are_mounted():
-    paths = {getattr(route, "path", "") for route in app.routes}
-    assert "/mcp" in paths
-    assert "/sse" in paths
+def test_sse_transport_is_gone(live):
+    assert live.get("/sse").status_code == 404
 
 
-def test_mcp_http_lists_the_tools():
-    headers = {"Accept": "application/json, text/event-stream", "Content-Type": "application/json"}
+HEADERS = {"Accept": "application/json, text/event-stream", "Content-Type": "application/json"}
+
+
+def _session(c):
     init = {"jsonrpc": "2.0", "id": 1, "method": "initialize",
             "params": {"protocolVersion": "2025-06-18", "capabilities": {},
                        "clientInfo": {"name": "test", "version": "0"}}}
-    with TestClient(app) as c:
-        r = c.post("/mcp", json=init, headers=headers)
-        assert r.status_code == 200, r.text
-        sid = r.headers.get("mcp-session-id")
-        h = {**headers, **({"mcp-session-id": sid} if sid else {})}
-        c.post("/mcp", json={"jsonrpc": "2.0", "method": "notifications/initialized"}, headers=h)
-        r = c.post("/mcp", json={"jsonrpc": "2.0", "id": 2, "method": "tools/list"}, headers=h)
-        assert r.status_code == 200, r.text
-        for tool in ("getPrayerTimes", "getQiblahDirection", "getSunInfo", "getMoonInfo", "getMoonVisibility"):
-            assert tool in r.text
+    r = c.post("/mcp", json=init, headers=HEADERS)
+    assert r.status_code == 200, r.text
+    sid = r.headers.get("mcp-session-id")
+    h = {**HEADERS, **({"mcp-session-id": sid} if sid else {})}
+    c.post("/mcp", json={"jsonrpc": "2.0", "method": "notifications/initialized"}, headers=h)
+    return h
+
+
+def test_mcp_http_lists_the_tools(live):
+    h = _session(live)
+    r = live.post("/mcp", json={"jsonrpc": "2.0", "id": 2, "method": "tools/list"}, headers=h)
+    assert r.status_code == 200, r.text
+    for tool in ("getPrayerTimes", "getQiblahDirection", "getSunInfo", "getMoonInfo", "getMoonVisibility"):
+        assert tool in r.text
+
+
+def test_mcp_tool_call_matches_rest(live):
+    h = _session(live)
+    call = {"jsonrpc": "2.0", "id": 3, "method": "tools/call",
+            "params": {"name": "getQiblahDirection", "arguments": {"request": JHB}}}
+    r = live.post("/mcp", json=call, headers=h)
+    assert r.status_code == 200, r.text
+    assert '"isError":true' not in r.text.replace(" ", "")
+    rest = live.post("/qiblah", json=JHB).json()
+    assert str(rest["angle_decimal"]) in r.text

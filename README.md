@@ -8,7 +8,7 @@ A FastAPI and MCP service providing Islamic prayer times calculations using the 
 
 This project relies on the following main dependencies:
 - [FastAPI](https://fastapi.tiangolo.com/): Web framework for building APIs
-- [FastAPI MCP](https://github.com/tadata-org/fastapi_mcp): Model Control Protocol
+- [MCP Python SDK](https://github.com/modelcontextprotocol/python-sdk): the official Model Context Protocol server
 - [islamic_times](https://github.com/hassantahan/islamic_times): Core calculation engine for prayer times
 - Pydantic: Data validation
 
@@ -186,10 +186,9 @@ Pass the value in the left column as `method`:
 
 ## MCP clients
 
-The service speaks two MCP transports:
+The MCP server uses the Streamable HTTP transport at `http://localhost:8000/mcp`. The older SSE transport is not supported.
 
-- Streamable HTTP (current): `http://localhost:8000/mcp`
-- SSE (older clients): `http://localhost:8000/sse`
+By default the MCP endpoint only accepts requests addressed to localhost, which protects against DNS rebinding. When you deploy, list your public host names in `SALAAH_ALLOWED_HOSTS`, comma-separated, for example `SALAAH_ALLOWED_HOSTS=salaah-mcp.fly.dev`.
 
 ### Claude Desktop
 
